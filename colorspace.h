@@ -1,11 +1,11 @@
-/** 
- * @file colorspace.h 
+/**
+ * @file colorspace.h
  * @author Pascal Getreuer 2005-2010 <getreuer@gmail.com>
  */
 #ifndef _COLORSPACE_H_
 #define _COLORSPACE_H_
 
-/** @brief Datatype to use for representing real numbers 
+/** @brief Datatype to use for representing real numbers
  * Set this typedef to either double or float depending on the application.
  */
 typedef double num;
@@ -26,7 +26,7 @@ typedef struct
 } colortransform;
 
 int GetColorTransform(colortransform *Trans, const char *TransformString);
-void ApplyColorTransform(colortransform Trans, 
+void ApplyColorTransform(colortransform Trans,
 	num *D0, num *D1, num *D2, num S0, num S1, num S2);
 
 void Rgb2Yuv(num *Y, num *U, num *V, num R, num G, num B);
@@ -52,8 +52,10 @@ void Hsi2Rgb(num *R, num *G, num *B, num H, num S, num I);
 void Rgb2Xyz(num *X, num *Y, num *Z, num R, num G, num B);
 void Xyz2Rgb(num *R, num *G, num *B, num X, num Y, num Z);
 void Xyz2Lab(num *L, num *a, num *b, num X, num Y, num Z);
+void Xyz2Labf(float *L, float *a, float *b, float X, float Y, float Z);
 void Lab2Xyz(num *X, num *Y, num *Z, num L, num a, num b);
 void Xyz2Luv(num *L, num *u, num *v, num X, num Y, num Z);
+void Xyz2Luvf(float *L, float *u, float *v, float X, float Y, float Z);
 void Luv2Xyz(num *X, num *Y, num *Z, num L, num u, num v);
 void Xyz2Lch(num *L, num *C, num *H, num X, num Y, num Z);
 void Lch2Xyz(num *X, num *Y, num *Z, num L, num C, num H);

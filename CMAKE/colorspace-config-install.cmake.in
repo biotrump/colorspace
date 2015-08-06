@@ -1,0 +1,14 @@
+# Compute locations from <prefix>/lib/cmake/colorspace-<v>/<self>.cmake
+get_filename_component(_COLORSPACE_SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+# Load colorspace targets from the install tree if necessary.
+set(_COLORSPACE_TARGET "@_colorspace_config_install_guard_target@")
+if(_COLORSPACE_TARGET AND NOT TARGET "${_COLORSPACE_TARGET}")
+  include("${_COLORSPACE_SELF_DIR}/colorspace-targets.cmake")
+endif()
+unset(_COLORSPACE_TARGET)
+
+# Report the blas and colorspace raw or imported libraries.
+set(COLORSPACE_colorspace_LIBRARIES "@COLORSPACE_LIBRARIES@")
+
+unset(_COLORSPACE_SELF_DIR)

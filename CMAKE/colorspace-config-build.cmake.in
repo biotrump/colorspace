@@ -1,0 +1,9 @@
+# Load colorspace targets from the build tree if necessary.
+set(_COLORSPACE_TARGET "@_colorspace_config_build_guard_target@")
+if(_COLORSPACE_TARGET AND NOT TARGET "${_COLORSPACE_TARGET}")
+  include("@COLORSPACE_BINARY_DIR@/colorspace-targets.cmake")
+endif()
+unset(_COLORSPACE_TARGET)
+
+# Report the blas and colorspace raw or imported libraries.
+#set(COLORSPACE_colorspace_LIBRARIES "@COLORSPACE_LIBRARIES@")

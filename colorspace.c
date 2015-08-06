@@ -4,7 +4,7 @@
  *
  * == Summary ==
  * This file implements routines for color transformations between the spaces
- * sRGB, Y'UV, Y'CbCr, Y'PbPr, Y'DbDr, Y'IQ, HSV, HSL, HSI, CIEXYZ, CIELAB, 
+ * sRGB, Y'UV, Y'CbCr, Y'PbPr, Y'DbDr, Y'IQ, HSV, HSL, HSI, CIEXYZ, CIELAB,
  * CIELUV, CIELCH, and CIECAT02 LMS.
  *
  * == Usage ==
@@ -15,13 +15,13 @@
        num S[3] = {173, 0.8, 0.5};
        num D[3];
        colortransform Trans;
-       
+
        if(!(GetColorTransform(&Trans, "HSI -> Lab")))
        {
            printf("Invalid syntax or unknown color space\n");
            return;
-       }   
-       
+       }
+
        ApplyColorTransform(Trans, &D[0], &D[1], &D[2], S[0], S[1], S[2]);
 @endcode
  * "num" is a typedef defined at the beginning of colorspace.h that may be set
@@ -36,15 +36,15 @@
      Lab2Rgb(&R, &G, &B, L, a, b);
 @endcode
  * Generally, the calling syntax is
-@code 
+@code
      Foo2Bar(&B0, &B1, &B2, F0, F1, F2);
-@endcode 
+@endcode
  * where (F0,F1,F2) are the coordinates of a color in space "Foo" and
- * (B0,B1,B2) are the transformed coordinates in space "Bar."  For any 
+ * (B0,B1,B2) are the transformed coordinates in space "Bar."  For any
  * transformation routine, its inverse has the sytax
-@code 
+@code
      Bar2Foo(&F0, &F1, &F2, B0, B1, B2);
-@endcode  
+@endcode
  *
  * The conversion routines are consistently named with the first letter of a
  * color space capitalized with following letters in lower case and omitting
@@ -52,7 +52,7 @@
  * any transformation routine Foo2Bar, its inverse is Bar2Foo.
  *
  * All transformations assume a two degree observer angle and a D65 illuminant.
- * The white point can be changed by modifying the WHITEPOINT_X, WHITEPOINT_Y,  
+ * The white point can be changed by modifying the WHITEPOINT_X, WHITEPOINT_Y,
  * WHITEPOINT_Z definitions at the beginning of colorspace.h.
  *
  * == List of transformation routines ==
@@ -69,22 +69,22 @@
  *   - Xyz2Lab(num *L, num *a, num *b, num X, num Y, num Z)
  *   - Xyz2Luv(num *L, num *u, num *v, num X, num Y, num Z)
  *   - Xyz2Lch(num *L, num *C, num *h, num X, num Y, num Z)
- *   - Xyz2Cat02lms(num *L, num *M, num *S, num X, num Y, num Z) 
+ *   - Xyz2Cat02lms(num *L, num *M, num *S, num X, num Y, num Z)
  *   - Rgb2Lab(num *L, num *a, num *b, num R, num G, num B)
  *   - Rgb2Luv(num *L, num *u, num *v, num R, num G, num B)
  *   - Rgb2Lch(num *L, num *C, num *h, num R, num G, num B)
- *   - Rgb2Cat02lms(num *L, num *M, num *S, num R, num G, num B) 
+ *   - Rgb2Cat02lms(num *L, num *M, num *S, num R, num G, num B)
  * (Similarly for the inverse transformations.)
  *
  * It is possible to transform between two arbitrary color spaces by first
  * transforming from the source space to sRGB and then transforming from
  * sRGB to the desired destination space.  For transformations between CIE
  * color spaces, it is convenient to use XYZ as the intermediate space.  This
- * is the strategy used by GetColorTransform and ApplyColorTransform. 
+ * is the strategy used by GetColorTransform and ApplyColorTransform.
  *
  * == References ==
  * The definitions of these spaces and the many of the transformation formulas
- * can be found in 
+ * can be found in
  *
  *    Poynton, "Frequently Asked Questions About Gamma"
  *    http://www.poynton.com/notes/colour_and_gamma/GammaFAQ.html
@@ -108,25 +108,25 @@
  * == License (BSD) ==
  * Copyright (c) 2005-2010, Pascal Getreuer
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without 
+ *
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
- * - Redistributions of source code must retain the above copyright 
+ *
+ * - Redistributions of source code must retain the above copyright
  *   notice, this list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright 
- *   notice, this list of conditions and the following disclaimer in 
+ * - Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in
  *   the documentation and/or other materials provided with the distribution.
- *       
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
@@ -157,7 +157,7 @@
 #define M_PI	3.14159265358979323846264338327950288
 #endif
 
-/** 
+/**
  * @brief sRGB gamma correction, transforms R to R'
  * http://en.wikipedia.org/wiki/SRGB
  */
@@ -165,14 +165,14 @@
 	(((t) <= 0.0031306684425005883) ? \
 	(12.92*(t)) : (1.055*pow((t), 0.416666666666666667) - 0.055))
 
-/** 
- * @brief Inverse sRGB gamma correction, transforms R' to R 
+/**
+ * @brief Inverse sRGB gamma correction, transforms R' to R
  */
 #define INVGAMMACORRECTION(t)	\
 	(((t) <= 0.0404482362771076) ? \
 	((t)/12.92) : pow(((t) + 0.055)/1.055, 2.4))
 
-/** 
+/**
  * @brief CIE L*a*b* f function (used to convert XYZ to L*a*b*)
  * http://en.wikipedia.org/wiki/Lab_color_space
  */
@@ -180,8 +180,12 @@
 	((t >= 8.85645167903563082e-3) ? \
 	pow(t,0.333333333333333) : (841.0/108.0)*(t) + (4.0/29.0))
 
-/** 
- * @brief CIE L*a*b* inverse f function 
+#define LABFL(t)	\
+	((t >= 8.8564516e-3) ? \
+	powf(t,0.333333333) : (841.0/108.0)*(t) + (4.0/29.0))
+
+/**
+ * @brief CIE L*a*b* inverse f function
  * http://en.wikipedia.org/wiki/Lab_color_space
  */
 #define LABINVF(t)	\
@@ -244,7 +248,7 @@ static const struct
 
 /*
  * == Linear color transformations ==
- * 
+ *
  * The following routines implement transformations between sRGB and
  * the linearly-related color spaces Y'UV, Y'PbPr, Y'DbDr, and Y'IQ.
  */
@@ -375,15 +379,15 @@ void Yiq2Rgb(num *R, num *G, num *B, num Y, num I, num Q)
 
 /*
  * == Hue Saturation Value/Lightness/Intensity color transformations ==
- * 
+ *
  * The following routines implement transformations between sRGB and
  * color spaces HSV, HSL, and HSI.
  */
 
 
-/** 
+/**
  * @brief Convert an sRGB color to Hue-Saturation-Value (HSV)
- * 
+ *
  * @param H, S, V pointers to hold the result
  * @param R, G, B the input sRGB values scaled in [0,1]
  *
@@ -402,16 +406,16 @@ void Rgb2Hsv(num *H, num *S, num *V, num R, num G, num B)
 	num Max = MAX3(R, G, B);
 	num Min = MIN3(R, G, B);
 	num C = Max - Min;
-	
-	
+
+
 	*V = Max;
-	
+
 	if(C > 0)
 	{
 		if(Max == R)
 		{
 			*H = (G - B) / C;
-			
+
 			if(G < B)
 				*H += 6;
 		}
@@ -419,7 +423,7 @@ void Rgb2Hsv(num *H, num *S, num *V, num R, num G, num B)
 			*H = 2 + (B - R) / C;
 		else
 			*H = 4 + (R - G) / C;
-		
+
 		*H *= 60;
 		*S = C / Max;
 	}
@@ -428,16 +432,16 @@ void Rgb2Hsv(num *H, num *S, num *V, num R, num G, num B)
 }
 
 
-/** 
+/**
  * @brief Convert a Hue-Saturation-Value (HSV) color to sRGB
- * 
+ *
  * @param R, G, B pointers to hold the result
  * @param H, S, V the input HSV values
  *
- * The input values are assumed to be scaled as 
+ * The input values are assumed to be scaled as
  *    0 <= H < 360,
  *    0 <= S <= 1,
- *    0 <= V <= 1. 
+ *    0 <= V <= 1.
  * The output sRGB values are scaled between 0 and 1.  This is the inverse
  * transformation of Rgb2Hsv.
  *
@@ -448,12 +452,12 @@ void Hsv2Rgb(num *R, num *G, num *B, num H, num S, num V)
 	num C = S * V;
 	num Min = V - C;
 	num X;
-	
-	
+
+
 	H -= 360*floor(H/360);
 	H /= 60;
 	X = C*(1 - fabs(H - 2*floor(H/2) - 1));
-	
+
 	switch((int)H)
 	{
 	case 0:
@@ -492,9 +496,9 @@ void Hsv2Rgb(num *R, num *G, num *B, num H, num S, num V)
 }
 
 
-/** 
+/**
  * @brief Convert an sRGB color to Hue-Saturation-Lightness (HSL)
- * 
+ *
  * @param H, S, L pointers to hold the result
  * @param R, G, B the input sRGB values scaled in [0,1]
  *
@@ -514,16 +518,16 @@ void Rgb2Hsl(num *H, num *S, num *L, num R, num G, num B)
 	num Max = MAX3(R, G, B);
 	num Min = MIN3(R, G, B);
 	num C = Max - Min;
-	
-	
+
+
 	*L = (Max + Min)/2;
-	
+
 	if(C > 0)
 	{
 		if(Max == R)
 		{
 			*H = (G - B) / C;
-			
+
 			if(G < B)
 				*H += 6;
 		}
@@ -531,7 +535,7 @@ void Rgb2Hsl(num *H, num *S, num *L, num R, num G, num B)
 			*H = 2 + (B - R) / C;
 		else
 			*H = 4 + (R - G) / C;
-		
+
 		*H *= 60;
 		*S = (*L <= 0.5) ? (C/(2*(*L))) : (C/(2 - 2*(*L)));
 	}
@@ -540,16 +544,16 @@ void Rgb2Hsl(num *H, num *S, num *L, num R, num G, num B)
 }
 
 
-/** 
+/**
  * @brief Convert a Hue-Saturation-Lightness (HSL) color to sRGB
- * 
+ *
  * @param R, G, B pointers to hold the result
  * @param H, S, L the input HSL values
  *
- * The input values are assumed to be scaled as 
+ * The input values are assumed to be scaled as
  *    0 <= H < 360,
  *    0 <= S <= 1,
- *    0 <= L <= 1. 
+ *    0 <= L <= 1.
  * The output sRGB values are scaled between 0 and 1.  This is the inverse
  * transformation of Rgb2Hsl.
  *
@@ -560,12 +564,12 @@ void Hsl2Rgb(num *R, num *G, num *B, num H, num S, num L)
 	num C = (L <= 0.5) ? (2*L*S) : ((2 - 2*L)*S);
 	num Min = L - 0.5*C;
 	num X;
-	
-	
+
+
 	H -= 360*floor(H/360);
 	H /= 60;
 	X = C*(1 - fabs(H - 2*floor(H/2) - 1));
-	
+
 	switch((int)H)
 	{
 	case 0:
@@ -604,9 +608,9 @@ void Hsl2Rgb(num *R, num *G, num *B, num H, num S, num L)
 }
 
 
-/** 
+/**
  * @brief Convert an sRGB color to Hue-Saturation-Intensity (HSI)
- * 
+ *
  * @param H, S, I pointers to hold the result
  * @param R, G, B the input sRGB values scaled in [0,1]
  *
@@ -623,15 +627,15 @@ void Rgb2Hsi(num *H, num *S, num *I, num R, num G, num B)
 {
 	num alpha = 0.5*(2*R - G - B);
 	num beta = 0.866025403784439*(G - B);
-	
-	
+
+
 	*I = (R + G + B)/3;
-	
+
 	if(*I > 0)
 	{
 		*S = 1 - MIN3(R,G,B) / *I;
 		*H = atan2(beta, alpha)*(180/M_PI);
-		
+
 		if(*H < 0)
 			*H += 360;
 	}
@@ -640,16 +644,16 @@ void Rgb2Hsi(num *H, num *S, num *I, num R, num G, num B)
 }
 
 
-/** 
+/**
  * @brief Convert a Hue-Saturation-Intesity (HSI) color to sRGB
- * 
+ *
  * @param R, G, B pointers to hold the result
  * @param H, S, I the input HSI values
  *
- * The input values are assumed to be scaled as 
+ * The input values are assumed to be scaled as
  *    0 <= H < 360,
  *    0 <= S <= 1,
- *    0 <= I <= 1. 
+ *    0 <= I <= 1.
  * The output sRGB values are scaled between 0 and 1.  This is the inverse
  * transformation of Rgb2Hsi.
  *
@@ -658,7 +662,7 @@ void Rgb2Hsi(num *H, num *S, num *I, num R, num G, num B)
 void Hsi2Rgb(num *R, num *G, num *B, num H, num S, num I)
 {
 	H -= 360*floor(H/360);
-	
+
 	if(H < 120)
 	{
 		*B = I*(1 - S);
@@ -684,9 +688,9 @@ void Hsi2Rgb(num *R, num *G, num *B, num H, num S, num I)
 
 /*
  * == CIE color transformations ==
- * 
+ *
  * The following routines implement transformations between sRGB and
- * the CIE color spaces XYZ, L*a*b, L*u*v*, and L*C*H*.  These 
+ * the CIE color spaces XYZ, L*a*b, L*u*v*, and L*C*H*.  These
  * transforms assume a 2 degree observer angle and a D65 illuminant.
  */
 
@@ -695,9 +699,9 @@ void Hsi2Rgb(num *R, num *G, num *B, num H, num S, num I)
  * @brief Transform sRGB to CIE XYZ with the D65 white point
  *
  * @param X, Y, Z pointers to hold the result
- * @param R, G, B the input sRGB values
+ * @param R, G, B the input sRGB values, it's in 0.0-1.0f, so RGB255 should be converted by dividing 255
  *
- * Poynton, "Frequently Asked Questions About Color," page 10 
+ * Poynton, "Frequently Asked Questions About Color," page 10
  * Wikipedia: http://en.wikipedia.org/wiki/SRGB
  * Wikipedia: http://en.wikipedia.org/wiki/CIE_1931_color_space
  */
@@ -724,16 +728,16 @@ void Rgb2Xyz(num *X, num *Y, num *Z, num R, num G, num B)
  * Wikipedia: http://en.wikipedia.org/wiki/CIE_1931_color_space
  */
 void Xyz2Rgb(num *R, num *G, num *B, num X, num Y, num Z)
-{	
+{
 	num R1, B1, G1, Min;
-	
-	
+
+
 	R1 = (num)( 3.2406*X - 1.5372*Y - 0.4986*Z);
 	G1 = (num)(-0.9689*X + 1.8758*Y + 0.0415*Z);
 	B1 = (num)( 0.0557*X - 0.2040*Y + 1.0570*Z);
-	
+
 	Min = MIN3(R1, G1, B1);
-	
+
 	/* Force nonnegative values so that gamma correction is well-defined. */
 	if(Min < 0)
 	{
@@ -770,6 +774,18 @@ void Xyz2Lab(num *L, num *a, num *b, num X, num Y, num Z)
 	*b = 200*(Y - Z);
 }
 
+void Xyz2Labf(float *L, float *a, float *b, float X, float Y, float Z)
+{
+	X /= WHITEPOINT_X;
+	Y /= WHITEPOINT_Y;
+	Z /= WHITEPOINT_Z;
+	X = LABFL(X);
+	Y = LABFL(Y);
+	Z = LABFL(Z);
+	*L = 116*Y - 16;
+	*a = 500*(X - Y);
+	*b = 200*(Y - Z);
+}
 
 /**
  * Convert CIE L*a*b* (CIELAB) to CIE XYZ with the D65 white point
@@ -777,7 +793,7 @@ void Xyz2Lab(num *L, num *a, num *b, num X, num Y, num Z)
  * @param X, Y, Z pointers to hold the result
  * @param L, a, b the input L*a*b* values
  *
- * Wikipedia: http://en.wikipedia.org/wiki/Lab_color_space 
+ * Wikipedia: http://en.wikipedia.org/wiki/Lab_color_space
  */
 void Lab2Xyz(num *X, num *Y, num *Z, num L, num a, num b)
 {
@@ -799,9 +815,9 @@ void Lab2Xyz(num *X, num *Y, num *Z, num L, num a, num b)
  * Wikipedia: http://en.wikipedia.org/wiki/CIELUV_color_space
  */
 void Xyz2Luv(num *L, num *u, num *v, num X, num Y, num Z)
-{	
+{
 	num u1, v1, Denom;
-	
+
 
 	if((Denom = X + 15*Y + 3*Z) > 0)
 	{
@@ -818,6 +834,25 @@ void Xyz2Luv(num *L, num *u, num *v, num X, num Y, num Z)
 	*v = 13*(*L)*(v1 - WHITEPOINT_V);
 }
 
+void Xyz2Luvf(float *L, float *u, float *v, float X, float Y, float Z)
+{
+	float u1, v1, Denom;
+
+
+	if((Denom = X + 15*Y + 3*Z) > 0)
+	{
+		u1 = (4*X) / Denom;
+		v1 = (9*Y) / Denom;
+	}
+	else
+		u1 = v1 = 0;
+
+	Y /= WHITEPOINT_Y;
+	Y = LABFL(Y);
+	*L = 116*Y - 16;
+	*u = 13*(*L)*(u1 - WHITEPOINT_U);
+	*v = 13*(*L)*(v1 - WHITEPOINT_V);
+}
 
 /**
  * Convert CIE L*u*v* (CIELUV) to CIE XYZ with the D65 white point
@@ -831,13 +866,13 @@ void Luv2Xyz(num *X, num *Y, num *Z, num L, num u, num v)
 {
 	*Y = (L + 16)/116;
 	*Y = WHITEPOINT_Y*LABINVF(*Y);
-	
+
 	if(L != 0)
 	{
 		u /= L;
 		v /= L;
 	}
-	
+
 	u = u/13 + WHITEPOINT_U;
 	v = v/13 + WHITEPOINT_V;
 	*X = (*Y) * ((9*u)/(4*v));
@@ -858,12 +893,12 @@ void Luv2Xyz(num *X, num *Y, num *Z, num L, num u, num v)
 void Xyz2Lch(num *L, num *C, num *H, num X, num Y, num Z)
 {
 	num a, b;
-	
-	
+
+
 	Xyz2Lab(L, &a, &b, X, Y, Z);
 	*C = sqrt(a*a + b*b);
 	*H = atan2(b, a)*180.0/M_PI;
-	
+
 	if(*H < 0)
 		*H += 360;
 }
@@ -878,8 +913,8 @@ void Lch2Xyz(num *X, num *Y, num *Z, num L, num C, num H)
 {
 	num a = C * cos(H*(M_PI/180.0));
 	num b = C * sin(H*(M_PI/180.0));
-	
-	
+
+
 	Lab2Xyz(X, Y, Z, L, a, b);
 }
 
@@ -902,7 +937,7 @@ void Cat02lms2Xyz(num *X, num *Y, num *Z, num L, num M, num S)
 }
 
 
-/* 
+/*
  * == Glue functions for multi-stage transforms ==
  */
 
@@ -970,7 +1005,7 @@ void Cat02lms2Rgb(num *R, num *G, num *B, num L, num M, num S)
 
 
 
-/* 
+/*
  * == Interface Code ==
  * The following is to define a function GetColorTransform with a convenient
  * string-based interface.
@@ -1020,11 +1055,11 @@ static int IdFromName(const char *Name)
  * @param Trans a colortransform pointer to hold the transform
  * @param TransformString string specifying the transformations
  * @return 1 on success, 0 on failure
- * 
+ *
  * This function provides a convenient interface to the collection of transform
- * functions in this file.  TransformString specifies the source and 
- * destination color spaces, 
- *    TransformString = "dest<-src" 
+ * functions in this file.  TransformString specifies the source and
+ * destination color spaces,
+ *    TransformString = "dest<-src"
  * or alternatively,
  *    TransformString = "src->dest".
  *
@@ -1045,7 +1080,7 @@ static int IdFromName(const char *Name)
  *    "LCH"             CIE L*C*H* (CIELCH),
  *    "CAT02 LMS"       CIE CAT02 LMS.
  * Color space names are case-insensitive and spaces are ignored.  When sRGB
- * is the source or destination, it can be omitted.  For example "yuv<-" is 
+ * is the source or destination, it can be omitted.  For example "yuv<-" is
  * short for "yuv<-rgb".
  *
  * The routine returns a colortransform structure representing the transform.
@@ -1054,13 +1089,13 @@ static int IdFromName(const char *Name)
        num S[3] = {173, 0.8, 0.5};
        num D[3];
        colortransform Trans;
-       
+
        if(!(GetColorTransform(&Trans, "HSI -> Lab")))
        {
            printf("Invalid syntax or unknown color space\n");
            return;
-       }   
-       
+       }
+
        ApplyColorTransform(Trans, &D[0], &D[1], &D[2], S[0], S[1], S[2]);
 @endcode
  */
@@ -1069,17 +1104,17 @@ int GetColorTransform(colortransform *Trans, const char *TransformString)
 	int LeftNumChars = 0, RightNumChars = 0, LeftSide = 1, LeftToRight = 0;
 	int i, j, SrcSpaceId, DestSpaceId;
 	char LeftSpace[16], RightSpace[16], c;
-	
-	
+
+
 	Trans->NumStages = 0;
 	Trans->Fun[0] = 0;
 	Trans->Fun[1] = 0;
-	
+
 	/* Parse the transform string */
 	while(1)
 	{
 		c = *(TransformString++);	/* Read the next character */
-		
+
 		if(!c)
 			break;
 		else if(c == '<')
@@ -1106,11 +1141,11 @@ int GetColorTransform(colortransform *Trans, const char *TransformString)
 			}
 		}
 	}
-	
+
 	/* Append null terminators on the LeftSpace and RightSpace strings */
 	LeftSpace[LeftNumChars] = 0;
 	RightSpace[RightNumChars] = 0;
-	
+
 	/* Convert names to colorspace enum */
 	if(LeftToRight)
 	{
@@ -1122,26 +1157,26 @@ int GetColorTransform(colortransform *Trans, const char *TransformString)
 		SrcSpaceId = IdFromName(RightSpace);
 		DestSpaceId = IdFromName(LeftSpace);
 	}
-	
+
 	/* Is either space is unknown? (probably a parsing error) */
 	if(SrcSpaceId == UNKNOWN_SPACE || DestSpaceId == UNKNOWN_SPACE)
 		return 0;	/* Return failure */
-	
+
 	/* Is this an identity transform? */
 	if(SrcSpaceId == DestSpaceId)
 		return 1;	/* Return successfully */
-	
+
 	/* Search the TransformPair table for a direct transformation */
 	for(i = 0; i < NUM_TRANSFORM_PAIRS; i++)
 	{
-		if(SrcSpaceId == TransformPair[i].Space[0] 
+		if(SrcSpaceId == TransformPair[i].Space[0]
 			&& DestSpaceId == TransformPair[i].Space[1])
 		{
 			Trans->NumStages = 1;
 			Trans->Fun[0] = TransformPair[i].Fun[0];
 			return 1;
 		}
-		else if(DestSpaceId == TransformPair[i].Space[0] 
+		else if(DestSpaceId == TransformPair[i].Space[0]
 			&& SrcSpaceId == TransformPair[i].Space[1])
 		{
 			Trans->NumStages = 1;
@@ -1149,7 +1184,7 @@ int GetColorTransform(colortransform *Trans, const char *TransformString)
 			return 1;
 		}
 	}
-	
+
 	/* Search the TransformPair table for a two-stage transformation */
 	for(i = 1; i < NUM_TRANSFORM_PAIRS; i++)
 		if(SrcSpaceId == TransformPair[i].Space[1])
@@ -1176,19 +1211,19 @@ int GetColorTransform(colortransform *Trans, const char *TransformString)
 					return 1;
 				}
 			}
-	
+
 	return 0;
 }
 
 
 /**
- * @brief Apply a colortransform 
+ * @brief Apply a colortransform
  *
  * @param Trans colortransform struct created by GetColorTransform
  * @param D0, D1, D2 pointers to hold the result
  * @param S0, S1, S2 the input values
  */
-void ApplyColorTransform(colortransform Trans, 
+void ApplyColorTransform(colortransform Trans,
 	num *D0, num *D1, num *D2, num S0, num S1, num S2)
 {
 	switch(Trans.NumStages)
@@ -1212,7 +1247,7 @@ void ApplyColorTransform(colortransform Trans,
 }
 
 
-/* The code below allows this file to be compiled as a MATLAB MEX function.  
+/* The code below allows this file to be compiled as a MATLAB MEX function.
  * From MATLAB, the calling syntax is
  *    B = colorspace('dest<-src', A);
  * See colorspace.m for details.
@@ -1220,7 +1255,7 @@ void ApplyColorTransform(colortransform Trans,
 #ifdef MATLAB_MEX_FILE
 /** @brief MEX gateway */
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[])
-{ 
+{
     #define	S_IN	     prhs[0]
     #define	A_IN	     prhs[1]
     #define	B_OUT	     plhs[0]
@@ -1231,46 +1266,46 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[])
 	const int *Size;
 	colortransform Trans;
 	int SBufLen, NumPixels, Channel, Channel2;
-    
-	   
+
+
     /* Parse the input arguments */
     if(nrhs != 2)
         mexErrMsgTxt("Two input arguments required.");
     else if(nlhs > 1)
         mexErrMsgTxt("Too many output arguments.");
-    
+
 	if(!mxIsChar(S_IN))
 		mexErrMsgTxt("First argument should be a string.");
     if(!IS_REAL_FULL_DOUBLE(A_IN))
         mexErrMsgTxt("Second argument should be a real full double array.");
-	
+
 	Size = mxGetDimensions(A_IN);
-	
-	if(mxGetNumberOfDimensions(A_IN) > 3 
+
+	if(mxGetNumberOfDimensions(A_IN) > 3
 		|| Size[mxGetNumberOfDimensions(A_IN) - 1] != 3)
 		mexErrMsgTxt("Second argument should be an Mx3 or MxNx3 array.");
-	
+
 	/* Read the color transform from S */
 	SBufLen = mxGetNumberOfElements(S_IN)*sizeof(mxChar) + 1;
 	SBuf = mxMalloc(SBufLen);
 	mxGetString(S_IN, SBuf, SBufLen);
-	
+
 	if(!(GetColorTransform(&Trans, SBuf)))
 		mexErrMsgTxt("Invalid syntax or unknown color space.");
-	
+
 	mxFree(SBuf);
-	
+
 	A = (num *)mxGetData(A_IN);
 	NumPixels = mxGetNumberOfElements(A_IN)/3;
-	
-	/* Create the output image */ 
-	B_OUT = mxCreateDoubleMatrix(0, 0, mxREAL); 
+
+	/* Create the output image */
+	B_OUT = mxCreateDoubleMatrix(0, 0, mxREAL);
 	mxSetDimensions(B_OUT, Size, mxGetNumberOfDimensions(A_IN));
 	mxSetData(B_OUT, B = mxMalloc(sizeof(num)*mxGetNumberOfElements(A_IN)));
-	
+
 	Channel = NumPixels;
 	Channel2 = NumPixels*2;
-	
+
 	/* Apply the color transform */
 	while(NumPixels--)
 	{

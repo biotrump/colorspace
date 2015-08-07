@@ -33,6 +33,7 @@ void Rgb2Yuv(num *Y, num *U, num *V, num R, num G, num B);
 void Yuv2Rgb(num *R, num *G, num *B, num Y, num U, num V);
 void Rgb2Ycbcr(num *Y, num *Cb, num *Cr, num R, num G, num B);
 void Ycbcr2Rgb(num *R, num *G, num *B, num Y, num Cb, num Cr);
+void Ycbcr2Rgbf(float *R, float *G, float *B, float Y, float Cr, float Cb);
 void Rgb2Jpegycbcr(num *R, num *G, num *B, num Y, num Cb, num Cr);
 void Jpegycbcr2Rgb(num *R, num *G, num *B, num Y, num Cb, num Cr);
 void Rgb2Ypbpr(num *Y, num *Pb, num *Pr, num R, num G, num B);
@@ -50,6 +51,7 @@ void Rgb2Hsi(num *H, num *S, num *I, num R, num G, num B);
 void Hsi2Rgb(num *R, num *G, num *B, num H, num S, num I);
 
 void Rgb2Xyz(num *X, num *Y, num *Z, num R, num G, num B);
+void Rgb2Xyzf(float *X, float *Y, float *Z, float R, float G, float B);
 void Xyz2Rgb(num *R, num *G, num *B, num X, num Y, num Z);
 void Xyz2Lab(num *L, num *a, num *b, num X, num Y, num Z);
 void Xyz2Labf(float *L, float *a, float *b, float X, float Y, float Z);

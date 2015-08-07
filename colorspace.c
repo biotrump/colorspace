@@ -304,6 +304,18 @@ void Ycbcr2Rgb(num *R, num *G, num *B, num Y, num Cr, num Cb)
 	*B = (num)(0.00456621004566210107*Y + 0.00791071623355474145*Cr + 1.1977497040190077e-08*Cb);
 }
 
+/*
+ * r,g,b is in 0-1.0
+ */
+void Ycbcr2Rgbf(float *R, float *G, float *B, float Y, float Cr, float Cb)
+{
+	Y -= 16;
+	Cb -= 128;
+	Cr -= 128;
+	*R = (float)(0.00456621004566210107*Y + 1.1808799897946415e-09*Cr + 0.00625892896994393634*Cb);
+	*G = (float)(0.00456621004566210107*Y - 0.00153632368604490212*Cr - 0.00318811094965570701*Cb);
+	*B = (float)(0.00456621004566210107*Y + 0.00791071623355474145*Cr + 1.1977497040190077e-08*Cb);
+}
 
 /** @brief sRGB to JPEG-Y'CbCr Luma + Chroma */
 void Rgb2Jpegycbcr(num *Y, num *Cb, num *Cr, num R, num G, num B)
@@ -715,6 +727,18 @@ void Rgb2Xyz(num *X, num *Y, num *Z, num R, num G, num B)
 	*Z = (num)(0.01929721549174694484*R + 0.1191838645808485318*G + 0.9504971251315797660*B);
 }
 
+/*
+ * r,g,b is in [0-1.0]
+ */
+void Rgb2Xyzf(float *X, float *Y, float *Z, float R, float G, float B)
+{
+	R = INVGAMMACORRECTION(R);
+	G = INVGAMMACORRECTION(G);
+	B = INVGAMMACORRECTION(B);
+	*X = (float)(0.4123955889674142161*R + 0.3575834307637148171*G + 0.1804926473817015735*B);
+	*Y = (float)(0.2125862307855955516*R + 0.7151703037034108499*G + 0.07220049864333622685*B);
+	*Z = (float)(0.01929721549174694484*R + 0.1191838645808485318*G + 0.9504971251315797660*B);
+}
 
 /**
  * @brief Transform CIE XYZ to sRGB with the D65 white point

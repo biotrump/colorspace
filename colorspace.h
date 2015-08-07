@@ -65,8 +65,10 @@ void Xyz2Cat02lms(num *L, num *M, num *S, num X, num Y, num Z);
 void Cat02lms2Xyz(num *X, num *Y, num *Z, num L, num M, num S);
 
 void Rgb2Lab(num *L, num *a, num *b, num R, num G, num B);
+void Rgb2Labf(float *L, float *a, float *b, float R, float G, float B);
 void Lab2Rgb(num *R, num *G, num *B, num L, num a, num b);
 void Rgb2Luv(num *L, num *u, num *v, num R, num G, num B);
+void Rgb2Luvf(float *L, float *u, float *v, float R, float G, float B);
 void Luv2Rgb(num *R, num *G, num *B, num L, num u, num v);
 void Rgb2Lch(num *L, num *C, num *H, num R, num G, num B);
 void Lch2Rgb(num *R, num *G, num *B, num L, num C, num H);

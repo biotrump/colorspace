@@ -972,6 +972,12 @@ void Rgb2Lab(num *L, num *a, num *b, num R, num G, num B)
 	Xyz2Lab(L, a, b, X, Y, Z);
 }
 
+void Rgb2Labf(float *L, float *a, float *b, float R, float G, float B)
+{
+	float X, Y, Z;
+	Rgb2Xyzf(&X, &Y, &Z, R, G, B);
+	Xyz2Labf(L, a, b, X, Y, Z);
+}
 
 void Lab2Rgb(num *R, num *G, num *B, num L, num a, num b)
 {
@@ -988,6 +994,12 @@ void Rgb2Luv(num *L, num *u, num *v, num R, num G, num B)
 	Xyz2Luv(L, u, v, X, Y, Z);
 }
 
+void Rgb2Luvf(float *L, float *u, float *v, float R, float G, float B)
+{
+	float X, Y, Z;
+	Rgb2Xyzf(&X, &Y, &Z, R, G, B);
+	Xyz2Luvf(L, u, v, X, Y, Z);
+}
 
 void Luv2Rgb(num *R, num *G, num *B, num L, num u, num v)
 {

@@ -32,6 +32,7 @@ void ApplyColorTransform(colortransform Trans,
 void Rgb2Yuv(num *Y, num *U, num *V, num R, num G, num B);
 void Yuv2Rgb(num *R, num *G, num *B, num Y, num U, num V);
 void Rgb2Ycbcr(num *Y, num *Cb, num *Cr, num R, num G, num B);
+void Rgb2Ycbcrf(float *Y, float *Cb, float *Cr, float R, float G, float B);
 void Ycbcr2Rgb(num *R, num *G, num *B, num Y, num Cb, num Cr);
 void Ycbcr2Rgbf(float *R, float *G, float *B, float Y, float Cr, float Cb);
 void Rgb2Jpegycbcr(num *R, num *G, num *B, num Y, num Cb, num Cr);
@@ -44,6 +45,10 @@ void Rgb2Yiq(num *Y, num *I, num *Q, num R, num G, num B);
 void Yiq2Rgb(num *R, num *G, num *B, num Y, num I, num Q);
 
 void Rgb2Hsv(num *H, num *S, num *V, num R, num G, num B);
+void Rgb2Hsvf(float *H, float *S, float *V, float R, float G, float B);
+void Rgb2Hf(float *H, float R, float G, float B);
+//r,g,b is 0-255
+void RGB2Hsvf(float *H, float *S, float *V, unsigned char r, unsigned char g, unsigned char b);
 void Hsv2Rgb(num *R, num *G, num *B, num H, num S, num V);
 void Rgb2Hsl(num *H, num *S, num *L, num R, num G, num B);
 void Hsl2Rgb(num *R, num *G, num *B, num H, num S, num L);

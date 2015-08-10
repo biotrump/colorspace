@@ -292,6 +292,12 @@ void Rgb2Ycbcr(num *Y, num *Cb, num *Cr, num R, num G, num B)
 	*Cr = (num)(112.0  *R -  93.786*G -  18.214*B + 128);
 }
 
+void Rgb2Ycbcrf(float *Y, float *Cb, float *Cr, float R, float G, float B)
+{
+	*Y  = (float)( 65.481*R + 128.553*G +  24.966*B +  16);
+	*Cb = (float)(-37.797*R -  74.203*G + 112.0  *B + 128);
+	*Cr = (float)(112.0  *R -  93.786*G -  18.214*B + 128);
+}
 
 /** @brief Y'CbCr to sRGB */
 void Ycbcr2Rgb(num *R, num *G, num *B, num Y, num Cr, num Cb)
@@ -443,6 +449,72 @@ void Rgb2Hsv(num *H, num *S, num *V, num R, num G, num B)
 		*H = *S = 0;
 }
 
+void Rgb2Hsvf(float *H, float *S, float *V, float R, float G, float B)
+{
+	float Max = MAX3(R, G, B);
+	float Min = MIN3(R, G, B);
+	float C = Max - Min;
+
+
+	*V = Max;
+
+	if(C > 0)
+	{
+		if(Max == R)
+		{
+			*H = (G - B) / C;
+
+			if(G < B)
+				*H += 6;
+		}
+		else if(Max == G)
+			*H = 2 + (B - R) / C;
+		else
+			*H = 4 + (R - G) / C;
+
+		*H *= 60;
+		*S = C / Max;
+	}
+	else
+		*H = *S = 0;
+}
+
+void Rgb2Hf(float *H, float R, float G, float B)
+{
+	float Max = MAX3(R, G, B);
+	float Min = MIN3(R, G, B);
+	float C = Max - Min;
+
+	if(C > 0)
+	{
+		if(Max == R)
+		{
+			*H = (G - B) / C;
+
+			if(G < B)
+				*H += 6;
+		}
+		else if(Max == G)
+			*H = 2 + (B - R) / C;
+		else
+			*H = 4 + (R - G) / C;
+
+		*H *= 60;
+	}
+	else
+		*H = 0;
+}
+
+/* R,G,B is 0-255
+ *
+ */
+void RGB2Hsvf(float *H, float *S, float *V, unsigned char r, unsigned char g, unsigned char b)
+{
+	float R=r/255.0f,G=g/255.0f,B=b/255.0f;//normalized to 0-1.0f
+
+	Rgb2Hsvf(H,S,V,R,G,B);
+
+}
 
 /**
  * @brief Convert a Hue-Saturation-Value (HSV) color to sRGB
